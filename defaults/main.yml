@@ -1,0 +1,43 @@
+---
+freezer_agent_install_dir: /opt/freezer-agent
+freezer_home: /etc/freezer
+
+freezer_user: freezer
+freezer_group: freezer
+
+freezer_revision: stable/ocata
+
+freezer_openstack_user: freezer
+freezer_openstack_password: freezer
+freezer_openstack_project_name: service
+freezer_openstack_tenant_name: service
+
+freezer_agent_services:
+  - service_name: freezer-scheduler.service
+    service_enabled: yes
+    service_config:
+      Unit:
+        Description: freezer scheduler
+        After: network.target
+      Service:
+        Type: simple
+        User: root
+        WorkingDirectory: "{{ freezer_home }}"
+        ExecStart: "{{ freezer_agent_install_dir }}/bin/freezer-scheduler --no-daemon start"
+        Restart: always
+        # CapabilityBoundingSet: CAP_NET_BIND_SERVICE
+        #
+        # XXX: environment variables which mich have ' ' inside needs to be escaped with '" "'
+        Environment:
+          - OS_PROJECT_DOMAIN_NAME=default
+          - OS_USER_DOMAIN_NAME=default
+          - '"OS_PROJECT_NAME={{ freezer_openstack_project_name }}"'
+          - '"OS_TENANT_NAME={{ freezer_openstack_tenant_name }}"'
+          - '"OS_USERNAME={{ freezer_openstack_user }}"'
+          - '"OS_PASSWORD={{ freezer_openstack_password }}"'
+          - OS_AUTH_URL=http://{{ openstack_identity_endpoint_host }}:{{ openstack_identity_ha_admin_port }}/v3
+          - OS_IMAGE_API_VERSION=2
+          - OS_IDENTITY_API_VERSION=3
+      Install:
+        WantedBy: multi-user.target
+

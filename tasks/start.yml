@@ -1,0 +1,7 @@
+---
+
+- name: Start and enable freezer-api
+  service:
+    name: freezer-scheduler
+    state: started
+    enabled: yes
