@@ -5,7 +5,7 @@ freezer_home: /etc/freezer
 freezer_user: freezer
 freezer_group: freezer
 
-freezer_revision: stable/ocata
+freezer_revision: stable/queens
 
 freezer_openstack_user: freezer
 freezer_openstack_password: freezer
