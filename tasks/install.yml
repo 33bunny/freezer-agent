@@ -44,7 +44,6 @@
     ## XXX: we should change requirements.txt to force python-novaclient==7.1.0
     - name: "git+https://github.com/openstack/freezer.git@{{ freezer_revision }}"
     - name: python-novaclient
-      version: 7.1.0
 
 - name: Configure systemd services
   include_role:
