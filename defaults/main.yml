@@ -35,7 +35,7 @@ freezer_agent_services:
           - '"OS_TENANT_NAME={{ freezer_openstack_tenant_name }}"'
           - '"OS_USERNAME={{ freezer_openstack_user }}"'
           - '"OS_PASSWORD={{ freezer_openstack_password }}"'
-          - OS_AUTH_URL=http://{{ openstack_identity_endpoint_host }}:{{ openstack_identity_ha_admin_port }}/v3
+          - "OS_AUTH_URL={{ openstack_identity_auth_url }}/v3" 
           - OS_IMAGE_API_VERSION=2
           - OS_IDENTITY_API_VERSION=3
       Install:
