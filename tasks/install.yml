@@ -45,6 +45,13 @@
     - name: "git+https://github.com/openstack/freezer.git@{{ freezer_revision }}"
     - name: python-novaclient
 
+- name: Patch freezer scheduler
+  patch:
+    src: ../files/0001-Fixes-starting-freezer-scheduler-with-no-daemon.patch
+    basedir: /opt/freezer-agent/local/lib/python2.7/site-packages
+    strip: 1
+  notify: Restart freezer-scheduler
+
 - name: Configure systemd services
   include_role:
     name: systemd-service

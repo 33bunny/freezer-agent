@@ -1,2 +1,6 @@
 ---
-# handlers file for freezer-agent
+
+- name: Restart freezer-scheduler
+  service:
+    name: freezer-scheduler
+    state: restarted
