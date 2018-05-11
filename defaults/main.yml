@@ -9,6 +9,8 @@ freezer_revision: stable/queens
 
 freezer_openstack_user: freezer
 freezer_openstack_password: freezer
+freezer_openstack_domain_project_name: default
+freezer_openstack_domain_user_name: default
 freezer_openstack_project_name: service
 freezer_openstack_tenant_name: service
 
@@ -29,13 +31,13 @@ freezer_agent_services:
         #
         # XXX: environment variables which mich have ' ' inside needs to be escaped with '" "'
         Environment:
-          - OS_PROJECT_DOMAIN_NAME=default
-          - OS_USER_DOMAIN_NAME=default
+          - OS_PROJECT_DOMAIN_NAME={{ freezer_openstack_domain_project_name }}
+          - OS_USER_DOMAIN_NAME={{ freezer_openstack_domain_user_name }}
           - '"OS_PROJECT_NAME={{ freezer_openstack_project_name }}"'
           - '"OS_TENANT_NAME={{ freezer_openstack_tenant_name }}"'
           - '"OS_USERNAME={{ freezer_openstack_user }}"'
           - '"OS_PASSWORD={{ freezer_openstack_password }}"'
-          - "OS_AUTH_URL={{ openstack_identity_auth_url }}/v3" 
+          - "OS_AUTH_URL={{ openstack_identity_auth_url }}/v3"
           - OS_IMAGE_API_VERSION=2
           - OS_IDENTITY_API_VERSION=3
       Install:
