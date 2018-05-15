@@ -52,6 +52,13 @@
     strip: 1
   notify: Restart freezer-scheduler
 
+- name: Patch freezer scheduler
+  patch:
+    src: ../files/0002-Fixed-using-os_auth_ver-parameter-when-passed-via-co.patch
+    basedir: /opt/freezer-agent/local/lib/python2.7/site-packages
+    strip: 1
+  notify: Restart freezer-scheduler
+
 - name: Configure systemd services
   include_role:
     name: systemd-service

@@ -1,0 +1,38 @@
+From 0e9d831b077f1f49717eea33d726b3ec5eaa3b95 Mon Sep 17 00:00:00 2001
+From: Jakub Jursa <jakub.jursa1@gmail.com>
+Date: Tue, 15 May 2018 16:41:45 +0200
+Subject: [PATCH] Fixed using 'os_auth_ver' parameter when passed via --config
+
+Although using 'os_auth_ver' parameter is deprecated, freezer-api (or
+freezer-web-ui respectively) still uses it to generate configs for jobs.
+Commit 50df2c8 introduced regression causing freezer-agent refusing to
+start when config passed via '--config' contains 'os_auth_ver' parameter
+(or any other deprecated option). The root cause is that loop (L568)
+iterates through keys defined in config file passed via '--config'
+therefore trying to call CONF.set_override with deprecated 'os_auth_ver'
+as a first argument which causes oslo.config library to raise
+KeyError: 'os-identity-api-version' as CONF.set_override is not expected
+to be called with deprecated options. This simple patch adds call for
+get for each key which may (correctly) raise NoSuchOptError for undefined
+(and deprecated) keys, thus safely fallbacking to except routine.
+
+Change-Id: Ia554d440b6256eab0f953ed9ad75cff1f040e6a1
+---
+ freezer/common/config.py | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/freezer/common/config.py b/freezer/common/config.py
+index fb9b991..8bb1dbb 100644
+--- a/freezer/common/config.py
++++ b/freezer/common/config.py
+@@ -567,6 +567,7 @@ def get_backup_args():
+         defaults.update(conf.default)
+         for config_key in conf.default.keys():
+             try:
++                CONF.get(config_key)
+                 CONF.set_override(config_key, conf.default[config_key])
+             except NoSuchOptError:
+                 LOG.debug('No such opt, {0}, so set it'.format(config_key))
+-- 
+2.7.4
+
