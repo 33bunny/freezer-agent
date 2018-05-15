@@ -3,7 +3,7 @@
 - name: Check if variables are defined as needed
   assert:
     that:
-      - freezer_openstack_auth_url is defined
+      - openstack_identity_auth_url is defined
       - freezer_openstack_password is defined
 
 - include: install.yml
