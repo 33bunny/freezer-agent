@@ -1,7 +1,7 @@
 From 6eaf64aba8de82d534425eca0fd9d1b46bdc03fe Mon Sep 17 00:00:00 2001
 From: Jakub Jursa <jakub.jursa1@gmail.com>
 Date: Wed, 25 Jul 2018 15:25:03 +0200
-Subject: [PATCH] changed nova backup limit from 100 to 3600s
+Subject: [PATCH] changed nova backup limit from 100 to 28800s
 
 ---
  freezer/engine/nova/nova.py | 2 +-
@@ -16,7 +16,7 @@ index 0d02f9c..84b17ae 100644
              NovaEngine.image_active,
              1,
 -            100,
-+            3600,
++            28800,
              message="Waiting for instnace {0} snapshot to become "
                      "active".format(backup_resource),
              kwargs={"glance_client": self.glance, "image_id": image_id}

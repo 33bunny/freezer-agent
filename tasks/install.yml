@@ -61,7 +61,7 @@
 
 - name: Patch freezer scheduler
   patch:
-    src: ../files/0003-changed-nova-backup-limit-from-100-to-3600s.patch
+    src: ../files/0003-changed-nova-backup-limit-from-100-to-28800s.patch
     basedir: /opt/freezer-agent/local/lib/python2.7/site-packages
     strip: 1
   notify: Restart freezer-scheduler
